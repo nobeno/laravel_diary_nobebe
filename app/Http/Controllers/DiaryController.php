@@ -30,7 +30,7 @@ class DiaryController extends Controller
 
     public function store(CreateDiary $request)
     {
-        $diary = new Diary(); //Diaryモデルをインスタンス化
+       $diary = new Diary(); //Diaryモデルをインスタンス化
 
         $diary->title = $request->title; //画面で入力されたタイトルを代入
         $diary->body = $request->body; //画面で入力された本文を代入

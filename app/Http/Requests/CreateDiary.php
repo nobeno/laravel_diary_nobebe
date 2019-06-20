@@ -24,6 +24,8 @@ class CreateDiary extends FormRequest
     public function rules()
     {
         return [
+            //key：inputタグのneme属性、value：バリデーションの条件
+            // | で区切って複数条件指定可能
             'title' => 'required|max:30', 
             'body' => 'required',        
         ];
