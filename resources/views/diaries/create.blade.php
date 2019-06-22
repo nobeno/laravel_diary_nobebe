@@ -14,7 +14,11 @@
              @endforeach
          </ul>
          @endif
-         <form action="{{ route('diary.create') }}" method="POST">
+         <form action="{{ route('diary.create') }}" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="image">画像</label>
+                <input type="file" name="image" class="form-control{{ $errors->has('image') ? ' is-invalid' : '' }}" id="image" placeholder="ファイル">
+            </div>
             @csrf
             <div class="form-group">
                 <label for="title">タイトル</label>

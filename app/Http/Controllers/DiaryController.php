@@ -6,6 +6,7 @@ use App\Diary; // App/Diaryクラスを使用する宣言
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateDiary;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class DiaryController extends Controller
 {
@@ -35,6 +36,12 @@ class DiaryController extends Controller
 
         $diary->title = $request->title; //画面で入力されたタイトルを代入
         $diary->body = $request->body; //画面で入力された本文を代入
+        date_default_timezone_set('Asia/Tokyo');
+        $time = date("Ymdhis"); 
+
+        $images_path = $request->image->storeAs('public/images', $time.'_'.Auth::user()->id . '.jpg');
+        $diary->images_path = basename($images_path);  
+
         $diary->user_id = Auth::user()->id; //追加 ログインしてるユーザーのidを保存
         $diary->save(); //DBに保存
 
@@ -93,6 +100,5 @@ class DiaryController extends Controller
 
         $diary->likes()->detach(Auth::user()->id);
     }
-
 
 }

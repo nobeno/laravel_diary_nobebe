@@ -11,6 +11,7 @@
 </a>
 @foreach ($diaries as $diary)
 <div class="m-4 p-4 border border-primary">
+    <img src="/storage/images/{{ $diary->images_path}}" width="auto" height="200px">
     <p>{{ $diary->title }}</p>
     <p>{{ $diary->body }}</p>
     <p>{{ $diary->created_at }}</p>

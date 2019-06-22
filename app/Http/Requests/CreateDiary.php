@@ -27,7 +27,8 @@ class CreateDiary extends FormRequest
             //key：inputタグのneme属性、value：バリデーションの条件
             // | で区切って複数条件指定可能
             'title' => 'required|max:30', 
-            'body' => 'required',        
+            'body' => 'required', 
+                 
         ];
     }
     public function attributes()
@@ -35,6 +36,7 @@ class CreateDiary extends FormRequest
         return [
             'title' => 'タイトル',
             'body' => '本文',
+            
         ];
     }
 }
