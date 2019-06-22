@@ -10,5 +10,8 @@ use Illuminate\Database\Eloquent\Model;
 //Diary -> diaries
 class Diary extends Model
 {
-    //
+    public function likes()
+    {
+        return $this->belongsToMany('App\User', 'likes')->withTimestamps();
+    }
 }

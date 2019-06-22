@@ -22,7 +22,10 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('diary/{diary}/edit', 'DiaryController@edit')->name('diary.edit');
     Route::put('diary/{diary}/update', 'DiaryController@update')->name('diary.update');
     
-    Route::delete('diary/{diary}/delete', 'DiaryController@destroy')->name('diary.destroy');    
+    Route::delete('diary/{diary}/delete', 'DiaryController@destroy')->name('diary.destroy'); 
+
+    Route::post('diary/{id}/like', 'DiaryController@like');
+    Route::post('diary/{id}/dislike', 'DiaryController@dislike');   
 });
 
 Auth::routes();

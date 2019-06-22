@@ -14,7 +14,8 @@ class DiaryController extends Controller
         //diariesテーブルのデータを全件取得
         //useしてるDiaryモデルのallメソッドを実施
         //all()はテーブルのデータを全て取得するメソッド
-        $diaries = Diary::orderBy('id', 'desc')->get();
+        // $diaries = Diary::orderBy('id', 'desc')->get();
+        $diaries = Diary::with('likes')->orderBy('id', 'desc')->get();
 
         return view('diaries.index',['diaries' => $diaries]);
 
@@ -40,10 +41,12 @@ class DiaryController extends Controller
         return redirect()->route('diary.index'); //一覧ページにリダイレクト
     }
 
-    public function destroy(int $id)
+    public function destroy(Diary $diary)
     {
-    //Diaryモデルを使用して、diariesテーブルから$idと一致するidをもつデータを取得
-        $diary = Diary::find($id); 
+        if (Auth::user()->id !== $diary->user_id) 
+        {
+            abort(403);
+        }
 
     //取得したデータを削除
         $diary->delete();
@@ -51,19 +54,24 @@ class DiaryController extends Controller
         return redirect()->route('diary.index');
     }
 
-    public function edit(int $id)
+    public function edit(Diary $diary)
     {
-        //Diaryモデルを使用して、diariesテーブルから$idと一致するidをもつデータを取得
-        $diary = Diary::find($id); 
+        if (Auth::user()->id !== $diary->user_id) 
+        {
+            abort(403);
+        } 
 
         return view('diaries.edit', [
             'diary' => $diary,
             ]);
     }
 
-    public function update(int $id, CreateDiary $request)
+    public function update(Diary $diary, CreateDiary $request)
     {
-        $diary = Diary::find($id);
+        if (Auth::user()->id !== $diary->user_id) 
+        {
+            abort(403);
+        } 
 
         $diary->title = $request->title; //画面で入力されたタイトルを代入
         $diary->body = $request->body; //画面で入力された本文を代入
@@ -71,5 +79,20 @@ class DiaryController extends Controller
 
         return redirect()->route('diary.index'); //一覧ページにリダイレクト
     }
+
+    public function like(int $id)
+    {
+        $diary = Diary::where('id', $id)->with('likes')->first();
+
+        $diary->likes()->attach(Auth::user()->id);
+    }
+
+    public function dislike(int $id)
+    {
+        $diary = Diary::where('id', $id)->with('likes')->first();
+
+        $diary->likes()->detach(Auth::user()->id);
+    }
+
 
 }
