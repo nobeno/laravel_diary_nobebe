@@ -19,6 +19,9 @@
                 <label for="image">画像</label>
                 <input type="file" name="image" class="form-control{{ $errors->has('image') ? ' is-invalid' : '' }}" id="image" placeholder="ファイル">
             </div>
+            <div class="m-3">
+                <img src="#" alt="" class="img-print" id="print_img" width="auto" height="200px">
+            </div>
             @csrf
             <div class="form-group">
                 <label for="title">タイトル</label>

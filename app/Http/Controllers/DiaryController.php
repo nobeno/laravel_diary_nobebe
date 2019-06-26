@@ -55,6 +55,8 @@ class DiaryController extends Controller
             abort(403);
         }
 
+        Storage::disk('local')->delete('public/images/'.$diary->images_path);
+
     //取得したデータを削除
         $diary->delete();
 
@@ -82,6 +84,15 @@ class DiaryController extends Controller
 
         $diary->title = $request->title; //画面で入力されたタイトルを代入
         $diary->body = $request->body; //画面で入力された本文を代入
+
+        if($request->image){
+        Storage::disk('local')->delete('public/images/'.$diary->images_path);
+        date_default_timezone_set('Asia/Tokyo');
+        $time = date("Ymdhis"); 
+        $images_path = $request->image->storeAs('public/images', $time.'_'.Auth::user()->id . '.jpg');
+        $diary->images_path = basename($images_path);
+        }
+
         $diary->save(); //DBに保存
 
         return redirect()->route('diary.index'); //一覧ページにリダイレクト

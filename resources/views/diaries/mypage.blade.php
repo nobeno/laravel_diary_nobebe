@@ -1,7 +1,6 @@
-
 @extends('layouts.app')
 @section('title')
-編集
+マイページ
 @endsection
 @section('content')
 <section class="container m-5">
