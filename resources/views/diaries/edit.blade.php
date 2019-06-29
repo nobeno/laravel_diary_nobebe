@@ -22,7 +22,7 @@
                 @csrf
                 @method('put')
                 <div class="form-group">
-                    <label for="title">タイトル</label>
+                    <label for="title">推しメン</label>
                     <input type="text" class="form-control" name="title" id="title" value="{{ old('title', $diary->title) }}">
                 </div>
                 <div class="form-group">
