@@ -37,6 +37,8 @@
                 <input class="diary-id" type="hidden" value="{{ $diary->id }}">
                 <span class="js-like-num">{{ $diary->likes->count() }}</span>
             </div>
+            <a href="{{ route('user.follow', $diary->user->id) }}">Follow User</a>
+            <a href="{{ route('user.unfollow', $diary->user->id) }}">Unollow User</a>
         </div>
 @endforeach
     </div>

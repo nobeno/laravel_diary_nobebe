@@ -26,6 +26,9 @@ Route::group(['middleware' => 'auth'], function() {
 
     Route::post('diary/{id}/like', 'DiaryController@like');
     Route::post('diary/{id}/dislike', 'DiaryController@dislike');
+
+    Route::get('profile/{id}/follow', 'ProfileController@followUser')->name('user.follow');
+    Route::get('profile/{id}/unfollow', 'ProfileController@unFollowUser')->name('user.unfollow');
 });
 
 Auth::routes();
