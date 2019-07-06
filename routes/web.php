@@ -25,7 +25,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::delete('diary/{diary}/delete', 'DiaryController@destroy')->name('diary.destroy'); 
 
     Route::post('diary/{id}/like', 'DiaryController@like');
-    Route::post('diary/{id}/dislike', 'DiaryController@dislike');   
+    Route::post('diary/{id}/dislike', 'DiaryController@dislike');
 });
 
 Auth::routes();
