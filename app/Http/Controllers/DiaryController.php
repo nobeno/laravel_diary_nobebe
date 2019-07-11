@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Diary; // App/Diaryクラスを使用する宣言
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateDiary;
 use Illuminate\Support\Facades\Auth;
@@ -17,8 +18,10 @@ class DiaryController extends Controller
         //all()はテーブルのデータを全て取得するメソッド
         // $diaries = Diary::orderBy('id', 'desc')->get();
         $diaries = Diary::with('likes')->orderBy('id', 'desc')->get();
+        $users   = User::with('followings')->get(); 
 
-        return view('diaries.index',['diaries' => $diaries]);
+        // return view('diaries.index',['diaries' => $diaries]);
+        return view('diaries.index')->with('diaries',$diaries)->with('users',$users);
 
         // dd($diaries);  //var_dump()とdie()を合わせたメソッド。変数の確認 + 処理のストップ
 

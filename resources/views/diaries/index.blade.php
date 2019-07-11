@@ -9,6 +9,27 @@
 <a href="{{ route('diary.create') }}" class="btn btn-primary btn-block">
     新規投稿
 </a>
+
+<!-- ユーザー表示 -->
+<div class="container m-5">
+    <div class="row">
+        @foreach($users as $user)
+            @if (Auth::check() && Auth::user()->id !== $user->id)
+                <div class="border border-primary m-4 p-4" style="max-width: 18rem;">
+                    <img height="80px" width="auto" src="{{ $user->picture_path }}">
+                    <p class="text-primary">{{$user->name}}</p>
+                        @if (Auth::check() && $user->followings->contains(function ($user) {return $user->id === Auth::user()->id;}))
+                            <a href="{{ route('user.unfollow', $user->id) }}">Unollow</a>
+                        @else
+                            <a href="{{ route('user.follow', $user->id) }}">Follow</a>
+                        @endif
+                </div>
+            @endif
+        @endforeach
+    </div>
+</div>
+
+<!-- 投稿表示 -->
 <div class="container">
     <div class="row">
 @foreach ($diaries as $diary)
@@ -36,9 +57,7 @@
                 @endif
                 <input class="diary-id" type="hidden" value="{{ $diary->id }}">
                 <span class="js-like-num">{{ $diary->likes->count() }}</span>
-            </div>
-            <a href="{{ route('user.follow', $diary->user->id) }}">Follow User</a>
-            <a href="{{ route('user.unfollow', $diary->user->id) }}">Unollow User</a>
+            </div> 
         </div>
 @endforeach
     </div>
