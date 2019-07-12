@@ -19,10 +19,11 @@
                     <img height="80px" width="auto" src="{{ $user->picture_path }}">
                     <p class="text-primary">{{$user->name}}</p>
                         @if (Auth::check() && $user->followings->contains(function ($user) {return $user->id === Auth::user()->id;}))
-                            <a href="{{ route('user.unfollow', $user->id) }}">Unollow</a>
+                            <button type="button" class="btn btn-primary js-unfollow textChange-{{$user->id}}">フォロー中</button>
                         @else
-                            <a href="{{ route('user.follow', $user->id) }}">Follow</a>
+                            <button type="button" class="btn btn-outline-primary js-follow textChange-{{$user->id}}">フォロー</button>
                         @endif
+                         <input class="user-id" type="hidden" value="{{ $user->id }}">
                 </div>
             @endif
         @endforeach
